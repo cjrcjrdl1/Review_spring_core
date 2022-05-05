@@ -9,9 +9,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderServiceImpl implements OrderService {
 
-    @Autowired private MemberRepository memberRepository; // 필드 주입
-    @Autowired private DiscountPolicy discountPolicy;
+    private MemberRepository memberRepository; // 필드 주입
+    private DiscountPolicy discountPolicy;
 
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
+
+    @Autowired //일반 메서드 주입
+    public void init(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
